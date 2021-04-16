@@ -1,6 +1,10 @@
 package com.lambdaschool.javazoos.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "animals")
@@ -11,6 +15,12 @@ public class Animal
     private long animalid;
 
     private String animaltype;
+
+    @OneToMany(mappedBy = "animal",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    @JsonIgnoreProperties(value = "animal", allowSetters = true)
+    private List<ZooAnimal> zoos = new ArrayList<>();
 
     public Animal()
     {
